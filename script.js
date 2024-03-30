@@ -12,27 +12,20 @@ function vsResult(){
     let output = Math.floor(Math.random()*3);
     let options =[ "rock", "paper","scissors"]
     let outputImg= document.querySelector("#vs-img");
-    outputImg.classList.remove("roll");
-    void outputImg.offsetWidth;
-    outputImg.classList.add("roll");
+
     
     if(options[output]=="rock"){ outputImg.setAttribute("src", "rock.png")}
     else if(options[output]=="paper"){outputImg.setAttribute("src", "paper.png")}
     else{outputImg.setAttribute("src", "scissors.png")}
     randomOutput= options[output];
+    setTimeout(()=>{outputImg.setAttribute("src", "question-mark.png");
+removeBorder();}, 3000)
 }
-function winResult(){
-    
-    winOutput.innerText = ++win;
-    winOutput.classList.add("blink");
-}
-function loseResult(){
-    loseOutput.innerText = ++lose;
-    loseOutput.classList.add("blink");
-}
-function drawResult(){
-    drawOutput.innerText = ++draw;
-    drawOutput.classList.add("blink");
+
+function removeBorder(){
+    moves.forEach((move)=>{
+        move.classList.remove("border"); 
+    })
 }
 function removeBlink(){
     winOutput.classList.remove("blink");
@@ -42,20 +35,21 @@ function removeBlink(){
 
 let result=(evt)=>{
 
-    moves.forEach((move)=>{
-        move.classList.remove("border"); 
-    })
+    removeBorder();
    
 removeBlink();
 evt.target.classList.add("border");
 vsResult();
 
 if(evt.target.id=='rock'&& randomOutput=="scissors" || evt.target.id=='paper'&& randomOutput=="rock"  || evt.target.id=='scissors'&& randomOutput=="paper"  )
-{ winResult();}
+{ winOutput.innerText = ++win;
+    winOutput.classList.add("blink");}
 else if(evt.target.id==randomOutput )
-{  drawResult(); }
+{  drawOutput.innerText = ++draw;
+    drawOutput.classList.add("blink"); }
 else{
-    loseResult();
+    loseOutput.innerText = ++lose;
+    loseOutput.classList.add("blink");
 }
   
 }
